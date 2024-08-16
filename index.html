@@ -1,4 +1,560 @@
-<html>
-<head><title>Sample Size Calculator</title></head>
-<body>Sample Size Calculator Body</body
-</html>
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <title>Sample Size Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="script.js"></script>
+  <script src="charts.js"></script>
+  <meta name="keywords" content="Sample Size,sample size calculator,minimum detectable effect">
+  <meta name="description" content="Sample Size Calculator">
+  <style>
+    a.link_format:link {color:inherit; text-decoration: underline;}
+    a.link_format:visited {color:inherit; text-decoration: underline;}
+    a.link_format:hover {color:#0000ff; text-decoration: underline;}
+    body {margin-top: 10px;}
+
+    .inlineinput { /* overrides some of the formating from Bootstrap*/
+      display:inline-flex;
+      width:auto;
+      margin:1px;
+      padding:1px 3px 1px 3px;
+      text-align:right;
+    }
+    .inlineselect { /* overrides some of the formating from Bootstrap*/
+      display:inline-flex;
+      width:fit-content;
+      margin:1px;
+      padding:1px 28px 1px 3px;
+    }
+
+    .FAQ_questions{
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .FAQ_answers{
+      font-size: 0.9em;
+    }
+
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding: 10px;
+      width: 100%;
+      text-align: right;
+    }
+  </style>
+</head>
+<body class="lh-sm" onload="afterBodyLoad();">
+  <div class="container">
+    <h1 class="text-center">Sample Size Calculator</h1>
+    <p class="text-center">Finds the minimum quantity of observations for your test to be statistically significant</p><br>
+    <p class="h2"><img height="80px" src="" name="wayd"/> What are you doing?</p>
+    <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+      Taking 
+      <select class="form-select inlineselect" id="samples" oninput="calculateMainPhrase()">
+        <option value="1" selected>one sample</option>
+        <option value="2">two samples</option>
+      </select>
+      and measuring the 
+      <select class="form-select inlineselect" id="metric" oninput="calculateMainPhrase()">
+        <option value="rate" selected>rate</option>
+        <option value="avg">average value</option>
+      </select>
+      <span id="textOp1"></span>
+      in order <span id="textOp2"></span> to be <span style="text-wrap: nowrap;"> statistically
+      <select class="form-select inlineselect" id="goal" oninput="calculateMainPhrase()">
+        <option value="confint" id="optionCI" selected>inside a confidence interval</option>
+        <option value="statsig" id="optionStatsig" style="display: none;">significant</option>
+        <option value="fixed" id="textOp3">different from a given rate</option>
+      </select>
+    </span><br><br>
+    <button type="button" class="btn btn-primary" onclick="doMainPhrase()">Continue</button>
+    </form>
+    <hr><br>
+
+    <div id="ssp" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        You need a sample size of 
+        <strong id="oneSampleRateN" class="text-success-emphasis">?</strong> observations to state with a
+        <select class="form-select inlineselect" id="oneSampleRateConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleRate()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level that the true rate is inside the interval between more or <span style="text-wrap: nowrap;">less 
+        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateCI" value="0.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleRate()"></span> percentage points</span> around the rate of 
+        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateP" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate. If it's totally uncertain, use 50%, which gives you the largest sample size" oninput="calculateOneSampleRate()">%</span>
+        (a confidence interval between <b id="oneSampleRateMin" class="text-success-emphasis">?</b> and <b id="oneSampleRateMax" class="text-success-emphasis">?</b>).
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>What if...?</h5>
+            <div id="oneSampleRate_chart_div"></div>
+          </div>
+          <div class="col">
+            <h5>Methodology</h5>
+            One Sample Proportion Z-test<br>
+            <img src="img/ssp.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="sspf" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If you measure a 
+        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateFixedSampled" value="3.5" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleRateFixed()">%</span>
+        rate on your sample, you need a sample size of 
+        <strong id="oneSampleRateFixedN" class="text-success-emphasis">?</strong> observations to state with a
+        <select class="form-select inlineselect" id="oneSampleRateFixedConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleRateFixed()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level that the true rate <span style="white-space: nowrap;">is
+        <select class="form-select inlineselect" id="oneSampleRateFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into an one- or two-tailed test" oninput="calculateOneSampleRateFixed()">
+          <option value="not smaller" selected>not smaller than</option>
+          <option value="not larger">not larger than</option>
+          <option value="not">not</option>
+        </select>
+        <input type="text" class="form-control inlineinput" id="oneSampleRateFixedP" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Referece rate to compare the sample against" oninput="calculateOneSampleRateFixed()">%.</span>
+        <p id="oneSampleRateFixedError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the rate could be smaller than the reference and still be statistically NOT smaller than it.</p>
+        <p id="oneSampleRateFixedError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the rate could be larger than the reference and still be statistically NOT larger than it.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>What if...?</h5>
+            <div id="oneSampleRateFixed_chart_div"></div>
+          </div>
+          <div class="col">
+            <h5>Methodology</h5>
+            One Sample Proportion Z-test<br>
+            <img src="img/ssp.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
+            <span id="oneSampleRateFixedTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="oneSampleRateFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
+            <span id="oneSampleRateFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="ssv" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If what you are measuring has a <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgStdev" value="320" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvg()">,</span>
+        then you need a sample size of <strong id="oneSampleAvgN" class="text-success-emphasis">?</strong> observations to state <span style="white-space: nowrap;">with a
+        <select class="form-select inlineselect" id="oneSampleAvgConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleAvg()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select></span>
+        confidence level that the true average is inside the interval between more or <span style="white-space: nowrap;">less
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgCI" value="10" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleAvg()">
+        around</span> the average you measure on your sample.
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            One Sample Mean Z-test<br>
+            <img src="img/ssv.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="ssvf" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If what you are measuring has a <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedStdev" value="18.5" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvgFixed()"></span>
+        and you measure on your sample an average <span style="white-space: nowrap;">of
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedSampled" value="22" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleAvgFixed()">,</span>
+        you need a sample size of <strong id="oneSampleAvgFixedN" class="text-success-emphasis">?</strong> observations to state <span style="white-space: nowrap;">with a
+        <select class="form-select inlineselect" id="oneSampleAvgFixedConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleAvgFixed()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select></span>
+        confidence level that the true average <span style="white-space: nowrap;">is
+        <select class="form-select inlineselect" id="oneSampleAvgFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into an one- or two-tailed test" oninput="calculateOneSampleAvgFixed()">
+          <option value="not smaller" selected>not smaller than</option>
+          <option value="not larger">not larger than</option>
+          <option value="not">not</option>
+        </select>
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedAvg" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Referece value to compare the sample against" oninput="calculateOneSampleAvgFixed()">.</span>
+        <p id="oneSampleAvgFixedError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the sampled value could be smaller than the reference and still be statistically NOT smaller than it.</p>
+        <p id="oneSampleAvgFixedError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the sampled value could be larger than the reference and still be statistically NOT larger than it.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            One Sample Mean Z-test<br>
+            <img src="img/ssv.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
+            <span id="oneSampleAvgFixedTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="oneSampleAvgFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
+            <span id="oneSampleAvgFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="2pt" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If you split your sample <span style="white-space: nowrap;">by 
+        <select class="form-select inlineselect" id="2SampleRateSplit" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How will you split your samples? TIP: 50%/50% minimizes the need for sample" oninput="calculate2SampleRate()">
+          <option value="99">99%/1%</option>
+          <option value="95">95%/5%</option>
+          <option value="90">90%/10%</option>
+          <option value="80">80%/20%</option>
+          <option value="65">65%/35%</option>
+          <option value="50" selected>50%/50%</option>
+          <option value="35">35%/65%</option>
+          <option value="20">20%/80%</option>
+          <option value="10">10%/90%</option>
+          <option value="5">5%/95%</option>
+          <option value="1">1%/99%</option>
+        </select></span>
+        and measure <span style="white-space: nowrap;">a
+        <input type="text" class="form-control inlineinput" id="2SampleRateP1" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRate()">%</span> rate from the first and <span style="white-space: nowrap;">a
+        <input type="text" class="form-control inlineinput" id="2SampleRateP2" value="4" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRate()">%</span> rate from the second (a <b id="2SampleRateDelta" class="text-success-emphasis">? p.p.</b> difference between them), you need
+        <strong id="2SampleRateN_phrase" class="text-success-emphasis">?</strong>
+        to state with a
+        <select class="form-select inlineselect" id="2SampleRateConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleRate()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level <span style="white-space: nowrap;">that 
+        <select class="form-select inlineselect" id="2SampleRateAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into an one- or two-tailed test" oninput="calculate2SampleRate()">
+          <option value="not equal" selected>the true rates are not the same</option>
+          <option value="not smaller">the second population's true rate in not smaller than the first's</option>
+          <option value="not larger">the second population's true rate in not larger than the first's</option>
+        </select>.</span>
+        <p id="2SampleRateError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller than the first and still be statistically not smaller than it.</p>
+        <p id="2SampleRateError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and still be statistically not larger than it.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            Two Sample Proportion Z-test with pooled variance<br>
+            <img src="img/2pt_1.svg" style="filter: invert(100%); padding: 10px;"><br>
+            <img src="img/2pt_2.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="2pf" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If you split your sample <span style="white-space: nowrap;">by 
+        <select class="form-select inlineselect" id="2SampleRateFSplit" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How will you split your samples? TIP: 50%/50% minimizes the need for sample" oninput="calculate2SampleRateF()">
+          <option value="99">99%/1%</option>
+          <option value="95">95%/5%</option>
+          <option value="90">90%/10%</option>
+          <option value="80">80%/20%</option>
+          <option value="65">65%/35%</option>
+          <option value="50" selected>50%/50%</option>
+          <option value="35">35%/65%</option>
+          <option value="20">20%/80%</option>
+          <option value="10">10%/90%</option>
+          <option value="5">5%/95%</option>
+          <option value="1">1%/99%</option>
+        </select></span>
+        and measure <span style="white-space: nowrap;">a
+        <input type="text" class="form-control inlineinput" id="2SampleRateFP1" value="14" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the first and <span style="white-space: nowrap;">a
+        <input type="text" class="form-control inlineinput" id="2SampleRateFP2" value="17" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the second (a <b id="2SampleRateFDelta" class="text-success-emphasis">? p.p.</b> difference between them), you need
+        <strong id="2SampleRateFN_phrase" class="text-success-emphasis">?</strong>
+        to state with a
+        <select class="form-select inlineselect" id="2SampleRateFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleRateF()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level that the difference between the true rates is not smaller <span style="white-space: nowrap;">than
+        <input type="text" class="form-control inlineinput" id="2SampleRateFMinDelta" value="1.5" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference rate to compare the measured difference against" oninput="calculate2SampleRateF()"> p.p..</span>
+        <p id="2SampleRateFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and the difference between them be compared with a negative value (meaning second sample rate smaller than first).</p>
+        <p id="2SampleRateFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error2">? p.p.</span> larger than the first and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error2">? p.p.</span>.</p>
+        <p id="2SampleRateFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller then the first and the difference between them be compared with a positive value (meaning second sample rate larger than first).</p>
+        <p id="2SampleRateFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error4">? p.p.</span> (smaller) than the first and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error4">? p.p.</span>.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            Two Sample Proportion Z-test with unpooled variance<br>
+            <img src="img/2pf.svg" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;">
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="2vt" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If you split your sample <span style="white-space: nowrap;">by 
+        <select class="form-select inlineselect" id="2SampleAvgSplit" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How will you split your samples? TIP: 50%/50% minimizes the need for sample" oninput="calculate2SampleAvg()">
+          <option value="99">99%/1%</option>
+          <option value="95">95%/5%</option>
+          <option value="90">90%/10%</option>
+          <option value="80">80%/20%</option>
+          <option value="65">65%/35%</option>
+          <option value="50" selected>50%/50%</option>
+          <option value="35">35%/65%</option>
+          <option value="20">20%/80%</option>
+          <option value="10">10%/90%</option>
+          <option value="5">5%/95%</option>
+          <option value="1">1%/99%</option>
+        </select></span>
+        and measure the sample mean <span style="white-space: nowrap;">of
+        <input type="text" class="form-control inlineinput" id="2SampleAvg1" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvg()"></span> in the first population which has a
+        <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev1" value="12.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()">,</span> and
+        <input type="text" class="form-control inlineinput" id="2SampleAvg2" value="21" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvg()"> in the second population which has a
+        <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev2" value="13.2" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()"></span> (a <b id="2SampleAvgDelta" class="text-success-emphasis">?</b> difference between them), you need 
+        <strong id="2SampleAvgN_phrase" class="text-success-emphasis">?</strong>
+        to state with a
+        <select class="form-select inlineselect" id="2SampleAvgConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleAvg()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level that the second population true mean <span style="white-space: nowrap;">is 
+        <select class="form-select inlineselect" id="2SampleAvgAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into an one- or two-tailed test" oninput="calculate2SampleAvg()">
+          <option value="not equal" selected>not equal to</option>
+          <option value="not smaller">not smaller than</option>
+          <option value="not larger">not larger than</option>
+        </select></span> the first one.
+        <p id="2SampleAvgError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller than the first and still be statistically not smaller than it.</p>
+        <p id="2SampleAvgError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and still be statistically not larger than it.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            Two Sample Mean Z-test<br>
+            <img src="img/2vt.svg" alt="z=\frac{\overline{x_2}-\overline{x_1}}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
+            <span id="2SampleAvgTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="2SampleAvgLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
+            <span id="2SampleAvgRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+    <div id="2vf" style="display: none;">
+      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+        If you split your sample <span style="white-space: nowrap;">by 
+        <select class="form-select inlineselect" id="2SampleAvgFSplit" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How will you split your samples? TIP: 50%/50% minimizes the need for sample" oninput="calculate2SampleAvgF()">
+          <option value="99">99%/1%</option>
+          <option value="95">95%/5%</option>
+          <option value="90">90%/10%</option>
+          <option value="80">80%/20%</option>
+          <option value="65">65%/35%</option>
+          <option value="50" selected>50%/50%</option>
+          <option value="35">35%/65%</option>
+          <option value="20">20%/80%</option>
+          <option value="10">10%/90%</option>
+          <option value="5">5%/95%</option>
+          <option value="1">1%/99%</option>
+        </select></span>
+        and measure the sample mean <span style="white-space: nowrap;">of
+        <input type="text" class="form-control inlineinput" id="2SampleAvgF1" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvgF()"></span> in the first population which has a
+        <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev1" value="12.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()">,</span> and
+        <input type="text" class="form-control inlineinput" id="2SampleAvgF2" value="22" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvgF()"> in the second population which has a
+        <span style="white-space: nowrap;">standard deviation of
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev2" value="13.2" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()"></span> (a <b id="2SampleAvgFDelta" class="text-success-emphasis">?</b> difference between them), you need 
+        <strong id="2SampleAvgFN_phrase" class="text-success-emphasis">?</strong>
+        to state with a
+        <select class="form-select inlineselect" id="2SampleAvgFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleAvgF()">
+          <option value="0.75">75%</option>
+          <option value="0.80">80%</option>
+          <option value="0.85">85%</option>
+          <option value="0.90">90%</option>
+          <option value="0.95" selected>95%</option>
+          <option value="0.98">98%</option>
+          <option value="0.99">99%</option>
+          <option value="0.995">99.5%</option>
+          <option value="0.999">99.9%</option>
+          <option value="0.9999">99.99%</option>
+        </select>
+        confidence level that the difference between the true means of these populations is not smaller <span style="white-space: nowrap;">than
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFMinDelta" value="1.4" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference value to compare the measured difference against" oninput="calculate2SampleAvgF()">.</span>
+        <p id="2SampleAvgFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and the difference between them be compared with a negative value (meaning second sample rate smaller than first).</p>
+        <p id="2SampleAvgFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error2">?</span> larger than the first and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error2">?</span>.</p>
+        <p id="2SampleAvgFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller then the first and the difference between them be compared with a positive value (meaning second sample rate larger than first).</p>
+        <p id="2SampleAvgFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error4">?</span> (smaller) than the first and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error4">?</span>.</p>
+      </form><br>
+      <hr>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Methodology</h5>
+            Two Sample Mean Z-test<br>
+            <img src="img/2vf.svg" alt="z=\frac{\left(\overline{x_2}-\overline{x_1} \right)-d_0}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}" style="filter: invert(100%); padding: 10px;"><br>
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;">
+          </div>
+        </div>
+      </div><br>
+    </div>
+
+      
+    <div id="FAQ_title" style="display: none;">
+      <h5>Q&A:</h5>
+    </div>
+    <div id="FAQ_alpha" style="display: none;">
+      <p><span class="FAQ_questions">Where is the &alpha; alpha?</span><br>
+        <span class="FAQ_answers">It's in the confidence level. A 95% confidence level is the same thing as an &alpha; of 5%.</span>
+      </p>
+    </div>
+    <div id="FAQ_rate" style="display: none;">
+      <p><span class="FAQ_questions">Why do I need to know the rate BEFORE taking the sample?</span><br>
+        <span class="FAQ_answers">Because the variability of the sample's rate depend on the level of the rate. You should use the best guess you have about the true rate and then fine tune sample size as the results come in. Some calculators encourage you to use 50% rate, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you have previous insight about the level of the rate, use it.</span>
+      </p>
+    </div>
+    <div id="FAQ_rateForFixed" style="display: none;">
+      <p><span class="FAQ_questions">Why do I need to know these rates BEFORE taking the sample?</span><br>
+        <span class="FAQ_answers"><b>Sample rate:</b> Because the difference between the observed sample rate and a given reference rate is crucial to say if the rates are statistically different or not. If you get a small difference, you'll need a much bigger sample to say they are different.<br>
+        <b>Reference rate:</b> Because the variability of the sample's rate depend on the level of the rate. Some calculators encourage you to use 50% rate here, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you do that, be carefull to also adjust the sample rate accordingly, since the sample size will depend on the difference between sample rate and this reference rate.<br>
+        You should use the best guess you have about the true value of these rates and then fine tune sample size as the results come in.</span>
+      </p>
+    </div>
+    <div id="FAQ_defineInterval" style="display: none;">
+      <p><span class="FAQ_questions">How do I define the interval?</span><br>
+        <span class="FAQ_answers">This represents the level of precision you want to have. Small intervals means high precision, but will also require larger sample sizes. Input an interval that makes sense for what you are testing. Consider that, after the test, this is going to be the level of precision of the rate you'll measure.</span>
+      </p>
+    </div>
+    <div id="FAQ_calc_ssp" style="display: none;">
+      <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
+        <span class="FAQ_answers">
+          <a href="https://www.calculator.net/sample-size-calculator.html" target="_blank">Calculator.net</a> gives the same result, just be careful with the "Margin of Error" parameter because the tooltip recommends inputing the percentage in relative terms, but the math behind it uses absolute terms.<br>
+          <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a> and <a href="https://select-statistics.co.uk/calculators/sample-size-calculator-population-proportion/" target="_blank">Select statistical services</a> give the same result, but they have an additional parameter, the size of the population. If the size is large, the result is equal to this calculator. They also don't explain well how to input the margin of error, which is the same as this calculator, but they don't say it is treated as absolute terms like percentage points, instead of relative terms.<br>
+          <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> consider the rate to be 50% and don't provide a way to change it. That's probably not a bad assumption for online surveys, given the uncertainty about the answers, but it inflates the sample size, especially if you already know the expected value you are measuring is much different from 50%. These calculators also have the population size parameter and, if the size is large, the result is equal to this calculator.<br>
+          <a href="https://sample-size.net/sample-size-conf-interval-proportion/" target="_blank">Sample Size Calculators for designing clinical research</a> gives the same results under the name "Normal approximation to the binomial calculation", and it also gives a higher sample size under "Binomial 'exact' calculation", but there is no explanation about this alternative methodology.<br>
+          -- add calculators with Beta!!!!
+        </span>
+      </p>
+    </div>
+    <div id="FAQ_calc_sspf" style="display: none;">
+      <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
+        <span class="FAQ_answers">
+          <a href="https://www.statskingdom.com/111proportion_normal1.html">Statistics Kingdom</a> and <a href="https://www.infrrr.com/proportions/single-proportion-hypothesis-test-calculator">infrrr</a> give the same result, but you input the sample size and they give you the confidence interval or the p-value (the other way around).
+        </span>
+      </p>
+    </div>
+    <div id="FAQ_calc_ssv" style="display: none;">
+      <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
+        <span class="FAQ_answers">
+          <a href="https://www.calculator.net/confidence-interval-calculator.html" target="_blank">Calculator.net</a>, <a href="https://365datascience.com/calculators/confidence-interval-calculator/">365DataScience</a> and <a href="https://sample-size.net/confidence-interval-mean/" target="_blank">Sample Size Calculators for designing clinical research</a> give the same result, but you input the sample size and they give you the confidence interval (the other way around). On the other hand, the latter one provides an improved accuracy for small sample sizes because it uses the <i>student's t</i> distribution instead of the <i>Normal</i> distribution, which is relevant for samples under ~30 observations, making it even more precise than this calculator.<br>
+          Heads up! Several online calculators like <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a>, <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> assume that your data is binary: each observation is either 1 (one) or 0 (zero), or true/false, or the person answered yes/no to a question, which is OK for measuring what proportion of website visitors makes a purchase, or what is the rate of employment of a population. This calculator also provide that kind of answer, but you have to choose "measuring the rate", rather than "measuring the average value" at the top.<br>
+          -- add calculators with Beta!!!!
+        </span>
+      </p>
+    </div>
+    <div id="FAQ_calc_ssvf" style="display: none;">
+      <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
+        <span class="FAQ_answers">
+          <a href="https://365datascience.com/calculators/hypothesis-test-calculator/" target="_blank">365DataScience</a>, <a href="https://www.omnicalculator.com/statistics/z-test">Omni Calculator</a> and <a href="https://www.infrrr.com/means/hypothesis-test-for-a-mean">infrrr</a> give the same result, but you have to input the sample size and they give you the confidence level or the p-value (the other way around). On the other hand, the latter one provides an improved accuracy for small sample sizes because it uses the <i>student's t</i> distribution instead of the <i>Normal</i> distribution, which is relevant for samples under ~30 observations, making it even more precise than this calculator.<br>
+          -- add calculators with Beta!!!!
+        </span>
+      </p>
+    </div>
+    <div id="FAQ_calc_2st" style="display: none;">
+      <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
+        <span class="FAQ_answers">
+          fazer
+          https://www.stat.ubc.ca/~rollin/stats/ssize/b2.html
+          
+          https://epitools.ausvet.com.au/ztesttwo?ZTestTwo%5Bp1%5D=0.03&ZTestTwo%5Bp2%5D=0.045&ZTestTwo%5Bn1%5D=100&ZTestTwo%5Bn2%5D=100&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=2&ZTestTwo%5Bp1%5D=0.03&ZTestTwo%5Bp2%5D=0.045&ZTestTwo%5Bn1%5D=859&ZTestTwo%5Bn2%5D=3434&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=2&ZTestTwo%5Bp1%5D=0.03&ZTestTwo%5Bp2%5D=0.04&ZTestTwo%5Bn1%5D=859&ZTestTwo%5Bn2%5D=3434&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=2&ZTestTwo%5Bp1%5D=0.03&ZTestTwo%5Bp2%5D=0.04&ZTestTwo%5Bn1%5D=1487&ZTestTwo%5Bn2%5D=5947&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=2&ZTestTwo%5Bp1%5D=0.1&ZTestTwo%5Bp2%5D=0.15&ZTestTwo%5Bn1%5D=1487&ZTestTwo%5Bn2%5D=5947&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=2&ZTestTwo%5Bp1%5D=0.1&ZTestTwo%5Bp2%5D=0.15&ZTestTwo%5Bn1%5D=1487&ZTestTwo%5Bn2%5D=5947&ZTestTwo%5Bconf%5D=0.05&ZTestTwo%5Btails%5D=&ZTestTwo%5Btails%5D=1
+          Mas não bate quando one tailed e n1 <> n2
+
+          https://sample-size.net/sample-size-proportions/
+
+          https://clincalc.com/stats/samplesize.aspx
+
+          https://www.statsig.com/calculator
+
+          -- add calculators with Beta!!!!
+        </span>
+      </p>
+    </div>
+    
+  </div>
+  <br><br><br>
+  <div class="footer bg-dark-subtle">
+    Author: <a href="https://rafatro.github.io/site/" target="_blank"><b>Rafael Rodrigues Troiani</b></a>
+  </div>
+</body>
