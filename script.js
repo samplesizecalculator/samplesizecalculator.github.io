@@ -1,12 +1,3 @@
-// var imgArr = ["https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd3aTZ6MXlqcmRzdDY3aWo2aW5lOWt1czRweWpkaHU0Mmx5Z24zcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/8vHStnTP2XuOp02QrK/giphy.gif","https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd3aTZ6MXlqcmRzdDY3aWo2aW5lOWt1czRweWpkaHU0Mmx5Z24zcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xMR09ktQoD1z7c2Qxc/giphy.gif","https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd3aTZ6MXlqcmRzdDY3aWo2aW5lOWt1czRweWpkaHU0Mmx5Z24zcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/clzJklnRWLyioNgMB4/giphy.gif","https://media.giphy.com/media/Z45gyFc4vcgzgS9wkw/giphy.gif?cid=790b7611p7wi6z1yjrdst67ij6ine9kus4pyjdhu42lygn3p","https://media.giphy.com/media/XnfY5snjBfH4ZZu0uH/giphy.gif?cid=ecf05e47byoi7xp6p2yfi30gu8i3rbjbro18gej2do1qvm6w","https://media.giphy.com/media/mFY3Lr17Z7PxNuRRgw/giphy.gif?cid=ecf05e47ai4fomnlb26it18ym5yd7kktewge5x9manz5lyv4","https://media.giphy.com/media/M9fhL0iHKfRWBQOaPY/giphy.gif?cid=ecf05e47ye8xgmyxyu33mim9ktiixln1qg0nqs6nmpze4ppb","https://media.giphy.com/media/0Yn1IT5fvjmODEoWFq/giphy.gif?cid=ecf05e47hc78k3lnpv1wef3h87w9g00unehutzonpg28j4kz"];
-
-var imgArr = ["https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExano2N2t5bTE2cXpodGhhcXA3a3BuOGIyeTI4c24yMjJjajRuaWZxNSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/yCLvVRIacSxYnIHXub/giphy.gif","https://media.giphy.com/media/yPotgykyYet3J7st0N/giphy.gif","https://media.giphy.com/media/ji6zzUZwNIuLS/giphy.gif","https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjE5aGp1bWZoaW5kd2Q1Z2gzOHlsMDB0Z25zdnpxdTczYThpcXQ5OSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xUPGchCSJlq3NzwLyU/giphy.gif","https://media.giphy.com/media/l4JA1COQqiZB6/giphy.gif","https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXpxMWUwNGd0YnFqM3ByczV3ZHkxaHNvMmFzM2llcXJ5OHV5OXl1ZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0HlzsaupDQvv0lgY/giphy.gif","https://media.giphy.com/media/DQaeCdCqhHWx3n4dvH/giphy.gif"];
-
-function displayImg(){
-  var num = Math.floor(Math.random() * (imgArr.length));
-  document.wayd.src=imgArr[num];
-}
-
 const norm_s_inv_answers = {
   p75000:0.6744897502,
   p80000:0.8416212327,
@@ -360,10 +351,22 @@ function calculate2SampleRate(){
   var conf = parseFloat(document.getElementById("2SampleRateConf").value);
   var type = document.getElementById("2SampleRateAns").value;
   if (type == "not equal") {
+    document.getElementById("2SampleRateTwoTailed").style.display='block';
+    document.getElementById("2SampleRateRightTailed").style.display='none';
+    document.getElementById("2SampleRateLeftTailed").style.display='none';
     var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
     var n1 = Math.pow(z*Math.sqrt(p_pooled*(1-p_pooled))/delta,2)/(1-n_proportion);
     var n2 = n1*(1/n_proportion-1);
   } else {
+    if (type=='not smaller') {
+      document.getElementById("2SampleRateTwoTailed").style.display='none';
+      document.getElementById("2SampleRateRightTailed").style.display='block';
+      document.getElementById("2SampleRateLeftTailed").style.display='none';
+    } else {
+      document.getElementById("2SampleRateTwoTailed").style.display='none';
+      document.getElementById("2SampleRateRightTailed").style.display='none';
+      document.getElementById("2SampleRateLeftTailed").style.display='block';
+    }
     if (type=='not smaller' && delta<0){
       var n1, n2 = Infinity
       document.getElementById("2SampleRateError1").style.display='block';
@@ -377,7 +380,7 @@ function calculate2SampleRate(){
     }
   } // I have to test more against online calculators... I just ound 1 that performs unequal sample size and one-tail (http://www2.psych.purdue.edu/~gfrancis/calculators/proportion_test_two_sample.shtml)
   if (n_proportion == 0.5) document.getElementById("2SampleRateN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleRateN_phrase").innerText="sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  else document.getElementById("2SampleRateN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -443,7 +446,7 @@ function calculate2SampleRateF(){
   }
   // I have to test more against online calculators... I didn~t find any
   if (n_proportion == 0.5) document.getElementById("2SampleRateFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleRateFN_phrase").innerText="sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  else document.getElementById("2SampleRateFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -518,7 +521,7 @@ function calculate2SampleAvg(){
     }
   }
   if (n_proportion == 0.5) document.getElementById("2SampleAvgN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleAvgN_phrase").innerText="sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  else document.getElementById("2SampleAvgN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -592,12 +595,11 @@ function calculate2SampleAvgF(){
     var n2 = n1*(1/n_proportion-1);
   }
   if (n_proportion == 0.5) document.getElementById("2SampleAvgFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleAvgFN_phrase").innerText="sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  else document.getElementById("2SampleAvgFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
   //draw_oneSampleAvgFCI(conf,ci,p,precision);
 };
 
 function afterBodyLoad(){
-  displayImg();
   document.querySelectorAll('[data-bs-toggle="tooltip"]')
   .forEach(tooltip => {
     new bootstrap.Tooltip(tooltip)
