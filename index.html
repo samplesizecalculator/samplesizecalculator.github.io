@@ -5,11 +5,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="img/n.png">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="script.js"></script>
   <script src="charts.js"></script>
-  <meta name="keywords" content="Sample Size,sample size calculator,minimum detectable effect">
+  <meta name="keywords" content="Sample Size,sample size calculator,minimum detectable effect,statistics,AB test,A/B test,confidence interval,confidence level">
   <meta name="description" content="Sample Size Calculator">
   <style>
     a.link_format:link {color:inherit; text-decoration: underline;}
@@ -33,6 +34,14 @@
       width:fit-content;
       margin:1px;
       padding:1px 28px 1px 3px;
+    }
+
+    .container { /* overrides some of the formating from Bootstrap*/
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    .col { /* overrides some of the formating from Bootstrap*/
+      padding: 5px;
     }
 
     .FAQ_questions{
@@ -59,7 +68,7 @@
     <h1 class="text-center">Sample Size Calculator</h1>
     <p class="text-center">Finds the minimum quantity of observations for your test to be statistically significant</p><br>
     <p class="h2">What are you doing?</p>
-    <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+    <form style="margin: 25px 0px 25px 0px; text-align: center; font-size: 1.2em;">
       Taking 
       <select class="form-select inlineselect" id="samples" oninput="calculateMainPhrase()">
         <option value="1" selected>one sample</option>
@@ -77,13 +86,13 @@
         <option value="statsig" id="optionStatsig" style="display: none;">significant</option>
         <option value="fixed" id="textOp3">different from a given rate</option>
       </select>
-    </span><br><br>
-    <button type="button" class="btn btn-primary" onclick="doMainPhrase()">Continue</button>
+      </span><br><br>
+      <button type="button" class="btn btn-primary" onclick="doMainPhrase()">Continue</button>
     </form>
     <hr><br>
 
     <div id="ssp" style="display: none;">
-      <form style="margin: 25px; text-align: center; font-size: 1.2em;">
+      <form style="margin: 25px 0px 25px 0px; text-align: center; font-size: 1.2em;">
         What is the minimum sample size to state with a
         <select class="form-select inlineselect" id="oneSampleRateConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleRate()">
           <option value="0.75">75%</option>
@@ -108,7 +117,7 @@
         <div class="row align-items-start">
           <div class="col">
             <h5>What if...?</h5>
-            <div id="oneSampleRate_chart_div"></div>
+            <div id="oneSampleRate_chart_div" style="min-width: 320px;"></div>
           </div>
           <div class="col">
             <h5>Methodology</h5>
@@ -153,7 +162,7 @@
         <div class="row align-items-start">
           <div class="col">
             <h5>What if...?</h5>
-            <div id="oneSampleRateFixed_chart_div"></div>
+            <div id="oneSampleRateFixed_chart_div" style="min-width: 320px;"></div>
           </div>
           <div class="col">
             <h5>Methodology</h5>
@@ -277,7 +286,8 @@
           <option value="0.999">99.9%</option>
           <option value="0.9999">99.99%</option>
         </select>
-        confidence level <span style="white-space: nowrap;">that 
+        confidence level that
+        <span style="white-space: nowrap;">
         <select class="form-select inlineselect" id="2SampleRateAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into an one- or two-tailed test" oninput="calculate2SampleRate()">
           <option value="not equal" selected>the true rates are not the same</option>
           <option value="not smaller">the second population's true rate in not smaller than the first's</option>
