@@ -164,11 +164,17 @@ function calculateOneSampleRate(){
   ci = ci/100;
   document.getElementById("oneSampleRateMin").innerText=((p-ci)*100).toFixed(precision)+"%";
   document.getElementById("oneSampleRateMax").innerText=((p+ci)*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateHyp1").innerText=(p*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateHyp2").innerText=(p*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateHyp3").innerText=(p*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateHyp4").innerText=(p*100).toFixed(precision)+"%";
   var stdev = Math.sqrt(p*(1-p));
   var conf = parseFloat(document.getElementById("oneSampleRateConf").value);
   var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
   var n = Math.pow(z*stdev/ci,2);
+  var nPower = Math.pow((z+norm_s_inv(0.8))*stdev/ci,2);
   document.getElementById("oneSampleRateN").innerText=Math.ceil(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  document.getElementById("oneSampleRateNPower").innerText=Math.ceil(nPower).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -202,34 +208,43 @@ function calculateOneSampleRateFixed(){
   var stdev = Math.sqrt(p*(1-p));
   var conf = parseFloat(document.getElementById("oneSampleRateFixedConf").value);
   var type = document.getElementById("oneSampleRateFixedAns").value;
+  document.getElementById("oneSampleRateFixedHyp1").innerText=(p*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateFixedHyp3").innerText=(p*100).toFixed(precision)+"%";
+  document.getElementById("oneSampleRateFixedHyp4").innerText=(p*100).toFixed(precision)+"%";
   if (type=='not'){
     document.getElementById("oneSampleRateFixedTwoTailed").style.display='block';
     document.getElementById("oneSampleRateFixedRightTailed").style.display='none';
     document.getElementById("oneSampleRateFixedLeftTailed").style.display='none';
+    document.getElementById("oneSampleRateFixedHyp2").innerText="different from "+(p*100).toFixed(precision)+"%";
     var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
     var n = Math.pow(z*stdev/Math.abs(delta),2);
+    var nPower = Math.pow((z+norm_s_inv(0.8))*stdev/Math.abs(delta),2);
   } else {
     if (type=='not smaller') {
       document.getElementById("oneSampleRateFixedTwoTailed").style.display='none';
       document.getElementById("oneSampleRateFixedRightTailed").style.display='block';
       document.getElementById("oneSampleRateFixedLeftTailed").style.display='none';
+      document.getElementById("oneSampleRateFixedHyp2").innerText="larger than "+(p*100).toFixed(precision)+"%";
     } else {
       document.getElementById("oneSampleRateFixedTwoTailed").style.display='none';
       document.getElementById("oneSampleRateFixedRightTailed").style.display='none';
       document.getElementById("oneSampleRateFixedLeftTailed").style.display='block';
+      document.getElementById("oneSampleRateFixedHyp2").innerText="smaller than "+(p*100).toFixed(precision)+"%";
     }
     if (type=='not smaller' && delta<0){
-      n = Infinity
+      n, nPower = Infinity
       document.getElementById("oneSampleRateFixedError1").style.display='block';
     } else if (type=='not larger' && delta>0){
-      n = Infinity
+      n, nPower = Infinity
       document.getElementById("oneSampleRateFixedError2").style.display='block';
     } else {
       var z = norm_s_inv(conf); //this test is one-tailed
       var n = Math.pow(z*stdev/delta,2);
+      var nPower = Math.pow((z+norm_s_inv(0.8))*stdev/delta,2);
     }
   }
   document.getElementById("oneSampleRateFixedN").innerText=Math.ceil(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  document.getElementById("oneSampleRateFixedNPower").innerText=Math.ceil(nPower).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   draw_oneSampleRateFixedS(conf,s,p,precision,type);
 };
 
@@ -287,35 +302,44 @@ function calculateOneSampleAvgFixed(){
   var delta = s-avg;
   var stdev = parseFloat(document.getElementById("oneSampleAvgFixedStdev").value);
   var conf = parseFloat(document.getElementById("oneSampleAvgFixedConf").value);
+  document.getElementById("oneSampleAvgFixedHyp1").innerText=avg.toFixed(precision);
+  document.getElementById("oneSampleAvgFixedHyp3").innerText=avg.toFixed(precision);
+  document.getElementById("oneSampleAvgFixedHyp4").innerText=avg.toFixed(precision);
   var type = document.getElementById("oneSampleAvgFixedAns").value;
   if (type=='not'){
     document.getElementById("oneSampleAvgFixedTwoTailed").style.display='block';
     document.getElementById("oneSampleAvgFixedRightTailed").style.display='none';
     document.getElementById("oneSampleAvgFixedLeftTailed").style.display='none';
+    document.getElementById("oneSampleAvgFixedHyp2").innerText="different from "+avg.toFixed(precision);
     var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
     var n = Math.pow(z*stdev/Math.abs(delta),2);
+    var nPower = Math.pow((z+norm_s_inv(0.8))*stdev/Math.abs(delta),2);
   } else {
     if (type=='not smaller') {
       document.getElementById("oneSampleAvgFixedTwoTailed").style.display='none';
       document.getElementById("oneSampleAvgFixedRightTailed").style.display='block';
       document.getElementById("oneSampleAvgFixedLeftTailed").style.display='none';
+      document.getElementById("oneSampleAvgFixedHyp2").innerText="larger than "+avg.toFixed(precision);
     } else {
       document.getElementById("oneSampleAvgFixedTwoTailed").style.display='none';
       document.getElementById("oneSampleAvgFixedRightTailed").style.display='none';
       document.getElementById("oneSampleAvgFixedLeftTailed").style.display='block';
+      document.getElementById("oneSampleAvgFixedHyp2").innerText="smaller than "+avg.toFixed(precision);
     }
     if (type=='not smaller' && delta<0){
-      n = Infinity
+      n, nPower = Infinity
       document.getElementById("oneSampleAvgFixedError1").style.display='block';
     } else if (type=='not larger' && delta>0){
-      n = Infinity
+      n, nPower = Infinity
       document.getElementById("oneSampleAvgFixedError2").style.display='block';
     } else {
       var z = norm_s_inv(conf); //this test is one-tailed
       var n = Math.pow(z*stdev/delta,2);
+      var nPower = Math.pow((z+norm_s_inv(0.8))*stdev/delta,2);
     }
   }
   document.getElementById("oneSampleAvgFixedN").innerText=Math.ceil(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  document.getElementById("oneSampleAvgFixedNPower").innerText=Math.ceil(nPower).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   //draw_oneSampleAvgFixedS(conf,s,p,precision,type);
 };
 
@@ -354,33 +378,47 @@ function calculate2SampleRate(){
     document.getElementById("2SampleRateTwoTailed").style.display='block';
     document.getElementById("2SampleRateRightTailed").style.display='none';
     document.getElementById("2SampleRateLeftTailed").style.display='none';
+    document.getElementById("2SampleRateHyp1").innerText="Samples come from populations with different rates";
     var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
     var n1 = Math.pow(z*Math.sqrt(p_pooled*(1-p_pooled))/delta,2)/(1-n_proportion);
     var n2 = n1*(1/n_proportion-1);
+    var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(p_pooled*(1-p_pooled))/delta,2)/(1-n_proportion);
+    var n2Power = n1Power*(1/n_proportion-1);
   } else {
     if (type=='not smaller') {
       document.getElementById("2SampleRateTwoTailed").style.display='none';
       document.getElementById("2SampleRateRightTailed").style.display='block';
       document.getElementById("2SampleRateLeftTailed").style.display='none';
+      document.getElementById("2SampleRateHyp1").innerText="The second sample comes from a population with a larger rate than the first";
     } else {
       document.getElementById("2SampleRateTwoTailed").style.display='none';
       document.getElementById("2SampleRateRightTailed").style.display='none';
       document.getElementById("2SampleRateLeftTailed").style.display='block';
+      document.getElementById("2SampleRateHyp1").innerText="The second sample comes from a population with a smaller rate than the first";
     }
     if (type=='not smaller' && delta<0){
-      var n1, n2 = Infinity
+      var n1, n2, n1Power, n2Power = Infinity
       document.getElementById("2SampleRateError1").style.display='block';
     } else if (type=='not larger' && delta>0){
       var n1, n2 = Infinity
+      var n1, n2, n1Power, n2Power = Infinity
       document.getElementById("2SampleRateError2").style.display='block';
     } else {
       var z = norm_s_inv(conf); //this test is one-tailed
       var n1 = Math.pow(z*Math.sqrt(p_pooled*(1-p_pooled))/delta,2)/(1-n_proportion);
       var n2 = n1*(1/n_proportion-1);
+      var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(p_pooled*(1-p_pooled))/delta,2)/(1-n_proportion);
+      var n2Power = n1Power*(1/n_proportion-1);
     }
   } // I have to test more against online calculators... I just ound 1 that performs unequal sample size and one-tail (http://www2.psych.purdue.edu/~gfrancis/calculators/proportion_test_two_sample.shtml)
-  if (n_proportion == 0.5) document.getElementById("2SampleRateN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleRateN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  if (n_proportion == 0.5){
+    document.getElementById("2SampleRateN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+    document.getElementById("2SampleRateNPower_phrase").innerText="2 samples of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+  }
+  else {
+    document.getElementById("2SampleRateN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+    document.getElementById("2SampleRateNPower_phrase").innerText="Sample sizes of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  }
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -424,29 +462,41 @@ function calculate2SampleRateF(){
   minDelta = minDelta/100;
   document.getElementById("2SampleRateFMinDelta_error2").innerText=(minDelta*100).toFixed(precision)+" p.p.";
   document.getElementById("2SampleRateFMinDelta_error4").innerText=(minDelta*100).toFixed(precision)+" p.p.";
+  document.getElementById("2SampleRateFHyp1").innerText=(minDelta*100).toFixed(precision);
+  document.getElementById("2SampleRateFHyp2").innerText=(minDelta*100).toFixed(precision);
+  document.getElementById("2SampleRateFHyp3").innerText=(minDelta*100).toFixed(precision);
+  document.getElementById("2SampleRateFHyp4").innerText=(minDelta*100).toFixed(precision);
   var n_proportion = parseFloat(document.getElementById("2SampleRateFSplit").value)/100; // proportion of n1 inside n1+n2
   var conf = parseFloat(document.getElementById("2SampleRateFConf").value);
   if (delta>0 && minDelta<0) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleRateFError1").style.display='block';
   } else if (delta>0 && minDelta>=delta) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleRateFError2").style.display='block';
   } else if (delta<0 && minDelta>0) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleRateFError3").style.display='block';
   } else if (delta<0 && minDelta<=delta) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleRateFError4").style.display='block';
   }
   else {
     var z = norm_s_inv(conf); //this test is one-tailed
     var n1 = Math.pow(z*Math.sqrt(p1*(1-p1)+p2*(1-p2)/(1/n_proportion-1))/(Math.abs(delta)-Math.abs(minDelta)),2);
     var n2 = n1*(1/n_proportion-1);
+    var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(p1*(1-p1)+p2*(1-p2)/(1/n_proportion-1))/(Math.abs(delta)-Math.abs(minDelta)),2);
+    var n2Power = n1Power*(1/n_proportion-1);
   }
   // I have to test more against online calculators... I didn~t find any
-  if (n_proportion == 0.5) document.getElementById("2SampleRateFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleRateFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  if (n_proportion == 0.5) {
+    document.getElementById("2SampleRateFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+    document.getElementById("2SampleRateFNPower_phrase").innerText="2 samples of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+  }
+  else {
+    document.getElementById("2SampleRateFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+    document.getElementById("2SampleRateFNPower_phrase").innerText="Sample sizes of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  }
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -494,34 +544,46 @@ function calculate2SampleAvg(){
     document.getElementById("2SampleAvgTwoTailed").style.display='block';
     document.getElementById("2SampleAvgRightTailed").style.display='none';
     document.getElementById("2SampleAvgLeftTailed").style.display='none';
+    document.getElementById("2SampleAvgHyp1").innerText="Samples come from populations with different mean values";
     var z = norm_s_inv(conf+(1-conf)/2); //this test is two-tailed
     var n1 = Math.pow(z*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/Math.abs(delta),2);
     var n2 = n1*(1/n_proportion-1);
-    console.log(delta);
+    var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/Math.abs(delta),2);
+    var n2Power = n1Power*(1/n_proportion-1);
   } else {
     if (type=='not smaller') {
       document.getElementById("2SampleAvgTwoTailed").style.display='none';
       document.getElementById("2SampleAvgRightTailed").style.display='block';
       document.getElementById("2SampleAvgLeftTailed").style.display='none';
+      document.getElementById("2SampleAvgHyp1").innerText="The second sample comes from a population with a larger mean value than the first";
     } else {
       document.getElementById("2SampleAvgTwoTailed").style.display='none';
       document.getElementById("2SampleAvgRightTailed").style.display='none';
       document.getElementById("2SampleAvgLeftTailed").style.display='block';
+      document.getElementById("2SampleAvgHyp1").innerText="The second sample comes from a population with a smaller mean value than the first";
     }
     if (type=='not smaller' && delta<0){
-      var n1, n2 = Infinity
+      var n1, n2, n1Power, n2Power = Infinity
       document.getElementById("2SampleAvgError1").style.display='block';
     } else if (type=='not larger' && delta>0){
-      var n1, n2 = Infinity
+      var n1, n2, n1Power, n2Power = Infinity
       document.getElementById("2SampleAvgError2").style.display='block';
     } else {
       var z = norm_s_inv(conf); //this test is one-tailed
       var n1 = Math.pow(z*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/Math.abs(delta),2);
       var n2 = n1*(1/n_proportion-1);
+      var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/Math.abs(delta),2);
+      var n2Power = n1Power*(1/n_proportion-1);
     }
   }
-  if (n_proportion == 0.5) document.getElementById("2SampleAvgN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleAvgN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  if (n_proportion == 0.5) {
+    document.getElementById("2SampleAvgN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+    document.getElementById("2SampleAvgNPower_phrase").innerText="2 samples of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+  }
+  else {
+    document.getElementById("2SampleAvgN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+    document.getElementById("2SampleAvgNPower_phrase").innerText="Sample sizes of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  }
   //draw_oneSampleRateCI(conf,ci,p,precision);
 };
 
@@ -574,28 +636,40 @@ function calculate2SampleAvgF(){
   var minDelta = parseFloat(document.getElementById("2SampleAvgFMinDelta").value);
   document.getElementById("2SampleAvgFMinDelta_error2").innerText=minDelta.toFixed(precision);
   document.getElementById("2SampleAvgFMinDelta_error4").innerText=minDelta.toFixed(precision);
+  document.getElementById("2SampleAvgFHyp1").innerText=minDelta.toFixed(precision);
+  document.getElementById("2SampleAvgFHyp2").innerText=minDelta.toFixed(precision);
+  document.getElementById("2SampleAvgFHyp3").innerText=minDelta.toFixed(precision);
+  document.getElementById("2SampleAvgFHyp4").innerText=minDelta.toFixed(precision);
   var n_proportion = parseFloat(document.getElementById("2SampleAvgFSplit").value)/100; // proportion of n1 inside n1+n2
   var conf = parseFloat(document.getElementById("2SampleAvgFConf").value);
   if (delta>0 && minDelta<0) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleAvgFError1").style.display='block';
   } else if (delta>0 && minDelta>=delta) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleAvgFError2").style.display='block';
   } else if (delta<0 && minDelta>0) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleAvgFError3").style.display='block';
   } else if (delta<0 && minDelta<=delta) {
-    var n1, n2 = Infinity
+    var n1, n2, n1Power, n2Power = Infinity
     document.getElementById("2SampleAvgFError4").style.display='block';
   }
   else {
     var z = norm_s_inv(conf); //this test is one-tailed
     var n1 = Math.pow(z*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/(Math.abs(delta)-Math.abs(minDelta)),2);
     var n2 = n1*(1/n_proportion-1);
+    var n1Power = Math.pow((z+norm_s_inv(0.8))*Math.sqrt(Math.pow(stdev1,2)+Math.pow(stdev2,2)/(1/n_proportion-1))/(Math.abs(delta)-Math.abs(minDelta)),2);
+    var n2Power = n1Power*(1/n_proportion-1);
   }
-  if (n_proportion == 0.5) document.getElementById("2SampleAvgFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
-  else document.getElementById("2SampleAvgFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  if (n_proportion == 0.5) {
+    document.getElementById("2SampleAvgFN_phrase").innerText="2 samples of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+    document.getElementById("2SampleAvgFNPower_phrase").innerText="2 samples of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations each";
+  }
+  else {
+    document.getElementById("2SampleAvgFN_phrase").innerText="Sample sizes of " + Math.ceil(n1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+    document.getElementById("2SampleAvgFNPower_phrase").innerText="Sample sizes of " + Math.ceil(n1Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " and " + Math.ceil(n2Power).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " observations respectively";
+  }
   //draw_oneSampleAvgFCI(conf,ci,p,precision);
 };
 

@@ -132,7 +132,38 @@
             <h5>Methodology</h5>
             One Sample Proportion Z-test<br>
             <img src="img/ssp.svg" style="filter: invert(100%); padding: 10px;"><br>
-            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>Sample comes from a population with a mean rate of <span id="oneSampleRateHyp1">?</span></td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br>Sample comes from a population with a mean rate <b>different</b> from <span id="oneSampleRateHyp2">?</span></td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the sample comes from a population with a mean rate of <span id="oneSampleRateHyp3">?</span></td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the sample comes from a population with a mean rate of <span id="oneSampleRateHyp4">?</span></td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the minimum sample size increases to <b><span id="oneSampleRateNPower" class="text-success-emphasis">?</span> observations</b>.
           </div>
         </div>
       </div><br>
@@ -178,9 +209,40 @@
             One Sample Proportion Z-test<br>
             <img src="img/ssp.svg" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="oneSampleRateFixedTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="oneSampleRateFixedTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
             <span id="oneSampleRateFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
             <span id="oneSampleRateFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>Sample comes from a population with a mean rate of <span id="oneSampleRateFixedHyp1">?</span></td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br>Sample comes from a population with a mean rate <span id="oneSampleRateFixedHyp2">?</span></td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the sample comes from a population with the mean rate of <span id="oneSampleRateFixedHyp3">?</span></td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the sample comes from a population with the mean rate of <span id="oneSampleRateFixedHyp4">?</span></td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the sample size increases to <b><span id="oneSampleRateFixedNPower" class="text-success-emphasis">?</span> observations</b>.
           </div>
         </div>
       </div><br>
@@ -214,9 +276,10 @@
             <h5>Methodology</h5>
             One Sample Mean Z-test<br>
             <img src="img/ssv.svg" style="filter: invert(100%); padding: 10px;"><br>
-            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
+            where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;">
           </div>
         </div>
+        <!--Statistical power would be here. But I don't think the power discussion makes sense in a test for building confidence intervals-->
       </div><br>
     </div>
 
@@ -256,9 +319,40 @@
             One Sample Mean Z-test<br>
             <img src="img/ssv.svg" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="oneSampleAvgFixedTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="oneSampleAvgFixedTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
             <span id="oneSampleAvgFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
             <span id="oneSampleAvgFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>Sample comes from a population with a mean of <span id="oneSampleAvgFixedHyp1">?</span></td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br>Sample comes from a population with a mean <span id="oneSampleAvgFixedHyp2">?</span></td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the sample comes from a population with the mean of <span id="oneSampleAvgFixedHyp3">?</span></td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the sample comes from a population with the mean of <span id="oneSampleAvgFixedHyp4">?</span></td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the sample size increases to <b><span id="oneSampleAvgFixedNPower" class="text-success-emphasis">?</span> observations</b>.
           </div>
         </div>
       </div><br>
@@ -282,7 +376,7 @@
         </select>,</span>
         measure <span style="white-space: nowrap;">a
         <input type="text" class="form-control inlineinput" id="2SampleRateP1" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRate()">%</span> rate from the first and <span style="white-space: nowrap;">a
-        <input type="text" class="form-control inlineinput" id="2SampleRateP2" value="4" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRate()">%</span> rate from the second (a <b id="2SampleRateDelta" class="text-success-emphasis">? p.p.</b> difference between them) and be able to state with a
+        <input type="text" class="form-control inlineinput" id="2SampleRateP2" value="4" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRate()">%</span> rate from the second <span style="white-space: nowrap;">(a <b id="2SampleRateDelta" class="text-success-emphasis">? p.p.</b></span> difference between them) and be able to state with a
         <select class="form-select inlineselect" id="2SampleRateConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleRate()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -315,9 +409,40 @@
             <img src="img/2pt_1.svg" style="filter: invert(100%); padding: 10px;"><br>
             <img src="img/2pt_2.svg" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="2SampleRateTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="2SampleRateTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
             <span id="2SampleRateLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
             <span id="2SampleRateRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>Samples come from populations with the same rate</td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br><span id="2SampleRateHyp1">?</span></td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the samples come from populations with the same rate</td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the samples come from populations with the same rate</td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the answer changes to <b><span id="2SampleRateNPower_phrase" class="text-success-emphasis">?</span></b>.
           </div>
         </div>
       </div><br>
@@ -370,6 +495,37 @@
             Two Sample Proportion Z-test with unpooled variance<br>
             <img src="img/2pf.svg" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;">
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>The second sample comes from a population with a rate <span id="2SampleRateFHyp1">?</span> p.p. larger than the first sample</td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br>The second sample comes from a population with a rate that is <b>more than</b> <span id="2SampleRateFHyp2">?</span> p.p. larger than the first sample</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the difference is <span id="2SampleRateFHyp3">?</span> p.p.</td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the difference is <span id="2SampleRateFHyp4">?</span> p.p.</td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the answer changes to <b><span id="2SampleRateFNPower_phrase" class="text-success-emphasis">?</span></b>.
           </div>
         </div>
       </div><br>
@@ -428,9 +584,40 @@
             Two Sample Mean Z-test<br>
             <img src="img/2vt.svg" alt="z=\frac{\overline{x_2}-\overline{x_1}}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="2SampleAvgTwoTailed" style="display: none;">in the middle of the distribution, inside a minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
+            <span id="2SampleAvgTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" style="padding: 10px;"></span>
             <span id="2SampleAvgLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" style="padding: 10px;"></span>
             <span id="2SampleAvgRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;"></span>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>Samples come from populations with the same mean value</td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br><span id="2SampleAvgHyp1">?</span></td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the samples come from populations with the same mean value</td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the samples come from populations with the same mean value</td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the answer changes to <b><span id="2SampleAvgNPower_phrase" class="text-success-emphasis">?</span></b>.
           </div>
         </div>
       </div><br>
@@ -487,6 +674,37 @@
             Two Sample Mean Z-test<br>
             <img src="img/2vf.svg" alt="z=\frac{\left(\overline{x_2}-\overline{x_1} \right)-d_0}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" style="padding: 10px;">
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <h5>Statistical Power</h5>
+            If you perform your test using the answer from this online calculator, you will be statistically covered, meaning the results are going to be statistically significant in accordance with the confidence level you use. Rest assured.<br>
+            On the other hand, some calculators and methodologies add another requirement on top of it, called "statistical power", increasing the minimum sample size significantly. This is related to the risk of Type II error: predicting that the results ARE NOT statistically significant when, in reality, they ARE.<br><br>
+            <table style="margin-left: auto; margin-right: auto; font-size: 0.7em; text-align: center; max-width: 650px;">
+              <tr>
+                <td colspan="2" rowspan="2"></td>
+                <td style="border-width: 1px;" colspan="2">Reality</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">Null hypothesis <b>H<sub>0</sub></b><br>The second sample comes from a population with a mean <span id="2SampleAvgFHyp1">?</span> larger than the first sample</td>
+                <td style="border-width: 1px;">Alternative hypothesis <b>H<sub>a</sub></b><br>The second sample comes from a population with a rate that is <b>more than</b> <span id="2SampleAvgFHyp2">?</span> larger than the first sample</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;" rowspan="2">Prediction</td>
+                <td style="border-width: 1px;">[Stat. sig.]<br><b>Reject</b> that the difference is <span id="2SampleAvgFHyp3">?</span></td>
+                <td style="border-width: 1px;">Type I error</td>
+                <td style="border-width: 1px;">&#10004;</td>
+              </tr>
+              <tr>
+                <td style="border-width: 1px;">[Not stat. sig.]<br><b>Not reject</b> that the difference is <span id="2SampleAvgFHyp4">?</span></td>
+                <td style="border-width: 1px;">&#10004;</td>
+                <td style="border-width: 1px;">Type II error</td>
+              </tr>
+            </table><br>
+            To calculate the Type II error, the alternative hypothesis <b>H<sub>a</sub></b> has to be determined with a value that is not just the opposite of <b>H<sub>0</sub></b> as it is in the table above. This is where it gets tricky.<br>
+            You need to set not only the <b>H<sub>0</sub></b> hypothesis with a numerical value but also the <b>H<sub>a</sub></b> with another numerical value. And this brings more complexity to the test design interpretation. Most methodologies and online calculators solve this by assuming a good <b>H<sub>a</sub></b> for your test is exactly the threshold value to meet the required confidence interval. They also commonly use 80% as the minimum required power, meaning that, under this alternative hypothesis <b>H<sub>a</sub></b>, if you performed the test several times, 80% of these times you would have correctly rejected <b>H<sub>0</sub></b>, while in the remaining 20% of times, you would have made the Type II error. You can achieve that if you increase the sample size, otherwise, your test is going to have 50% power.<br>
+            Despite these caveats, if you require 80% statistical power to perform your test, the answer changes to <b><span id="2SampleAvgFNPower_phrase" class="text-success-emphasis">?</span></b>.
           </div>
         </div>
       </div><br>
