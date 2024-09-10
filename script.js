@@ -141,8 +141,8 @@ function doMainPhrase(){
 }
 
 function calculateOneSampleRate(){
-  document.getElementById("oneSampleRateP").size = Math.max(1,document.getElementById("oneSampleRateP").value.length-2);
-  document.getElementById("oneSampleRateCI").size = Math.max(1,document.getElementById("oneSampleRateCI").value.length-2);
+  document.getElementById("oneSampleRateP").size = Math.max(1,document.getElementById("oneSampleRateP").value.length);
+  document.getElementById("oneSampleRateCI").size = Math.max(1,document.getElementById("oneSampleRateCI").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("oneSampleRateP").value.split(".").length == 1){
     var p_precision=0;
@@ -183,8 +183,8 @@ function calculateOneSampleRateFixed(){
   document.getElementById("oneSampleRateFixedError1").style.display='none';
   document.getElementById("oneSampleRateFixedError2").style.display='none';
   //
-  document.getElementById("oneSampleRateFixedP").size = Math.max(1,document.getElementById("oneSampleRateFixedP").value.length-2);
-  document.getElementById("oneSampleRateFixedSampled").size = Math.max(1,document.getElementById("oneSampleRateFixedSampled").value.length-2);
+  document.getElementById("oneSampleRateFixedP").size = Math.max(1,document.getElementById("oneSampleRateFixedP").value.length);
+  document.getElementById("oneSampleRateFixedSampled").size = Math.max(1,document.getElementById("oneSampleRateFixedSampled").value.length);
   // add validations !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("oneSampleRateFixedP").value.split(".").length == 1){
     var p_precision=0;
@@ -249,8 +249,8 @@ function calculateOneSampleRateFixed(){
 };
 
 function calculateOneSampleAvg(){
-  document.getElementById("oneSampleAvgStdev").size = Math.max(1,document.getElementById("oneSampleAvgStdev").value.length-2);
-  document.getElementById("oneSampleAvgCI").size = Math.max(1,document.getElementById("oneSampleAvgCI").value.length-2);
+  document.getElementById("oneSampleAvgStdev").size = Math.max(1,document.getElementById("oneSampleAvgStdev").value.length);
+  document.getElementById("oneSampleAvgCI").size = Math.max(1,document.getElementById("oneSampleAvgCI").value.length);
   // add validation !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("oneSampleAvgStdev").value.split(".").length == 1){
     var stdev_precision=0;
@@ -280,8 +280,8 @@ function calculateOneSampleAvgFixed(){
   document.getElementById("oneSampleAvgFixedError1").style.display='none';
   document.getElementById("oneSampleAvgFixedError2").style.display='none';
   //
-  document.getElementById("oneSampleAvgFixedAvg").size = Math.max(1,document.getElementById("oneSampleAvgFixedAvg").value.length-2);
-  document.getElementById("oneSampleAvgFixedSampled").size = Math.max(1,document.getElementById("oneSampleAvgFixedSampled").value.length-2);
+  document.getElementById("oneSampleAvgFixedAvg").size = Math.max(1,document.getElementById("oneSampleAvgFixedAvg").value.length);
+  document.getElementById("oneSampleAvgFixedSampled").size = Math.max(1,document.getElementById("oneSampleAvgFixedSampled").value.length);
   // add validations !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("oneSampleAvgFixedAvg").value.split(".").length == 1){
     var avg_precision=0;
@@ -429,8 +429,8 @@ function calculate2SampleRateF(){
   document.getElementById("2SampleRateFError3").style.display='none';
   document.getElementById("2SampleRateFError4").style.display='none';
 
-  document.getElementById("2SampleRateFP1").size = Math.max(1,document.getElementById("2SampleRateFP1").value.length-2);
-  document.getElementById("2SampleRateFP2").size = Math.max(1,document.getElementById("2SampleRateFP2").value.length-2);
+  document.getElementById("2SampleRateFP1").size = Math.max(1,document.getElementById("2SampleRateFP1").value.length);
+  document.getElementById("2SampleRateFP2").size = Math.max(1,document.getElementById("2SampleRateFP2").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("2SampleRateFP1").value.split(".").length == 1){
     var p1_precision=0;
@@ -505,8 +505,8 @@ function calculate2SampleAvg(){
   document.getElementById("2SampleAvgError1").style.display='none';
   document.getElementById("2SampleAvgError2").style.display='none';
 
-  document.getElementById("2SampleAvg1").size = Math.max(1,document.getElementById("2SampleAvg1").value.length-2);
-  document.getElementById("2SampleAvg2").size = Math.max(1,document.getElementById("2SampleAvg2").value.length-2);
+  document.getElementById("2SampleAvg1").size = Math.max(1,document.getElementById("2SampleAvg1").value.length);
+  document.getElementById("2SampleAvg2").size = Math.max(1,document.getElementById("2SampleAvg2").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("2SampleAvg1").value.split(".").length == 1){
     var avg1_precision=0;
@@ -594,8 +594,8 @@ function calculate2SampleAvgF(){
   document.getElementById("2SampleAvgFError3").style.display='none';
   document.getElementById("2SampleAvgFError4").style.display='none';
 
-  document.getElementById("2SampleAvgF1").size = Math.max(1,document.getElementById("2SampleAvgF1").value.length-2);
-  document.getElementById("2SampleAvgF2").size = Math.max(1,document.getElementById("2SampleAvgF2").value.length-2);
+  document.getElementById("2SampleAvgF1").size = Math.max(1,document.getElementById("2SampleAvgF1").value.length);
+  document.getElementById("2SampleAvgF2").size = Math.max(1,document.getElementById("2SampleAvgF2").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("2SampleAvgF1").value.split(".").length == 1){
     var avg1_precision=0;

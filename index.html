@@ -116,7 +116,7 @@
           <option value="0.9999">99.99%</option>
         </select>
         confidence level that the true rate is inside the interval between more or <span style="text-wrap: nowrap;">less 
-        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateCI" value="0.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleRate()"></span> percentage points</span> around the rate of 
+        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateCI" value="0.7" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleRate()"></span> percentage points</span> around the rate of 
         <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateP" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate. If it's totally uncertain, use 50%, which gives you the largest sample size" oninput="calculateOneSampleRate()">%</span>
         (a confidence interval between <b id="oneSampleRateMin" class="text-success-emphasis">?</b> and <b id="oneSampleRateMax" class="text-success-emphasis">?</b>)?
       </form>
@@ -173,7 +173,7 @@
     <div id="sspf" style="display: none;">
       <form style="margin: 25px; text-align: center; font-size: 1.2em;">
         What is the minimum sample size if you measure <span style="white-space: nowrap;">a 
-        <input type="text" class="form-control inlineinput" id="oneSampleRateFixedSampled" value="3.5" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleRateFixed()">%</span>
+        <input type="text" class="form-control inlineinput" id="oneSampleRateFixedSampled" value="3.5" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleRateFixed()">%</span>
         rate on your sample and want to be able to state with a
         <select class="form-select inlineselect" id="oneSampleRateFixedConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleRateFixed()">
           <option value="0.75">75%</option>
@@ -253,7 +253,7 @@
     <div id="ssv" style="display: none;">
       <form style="margin: 25px; text-align: center; font-size: 1.2em;">
         What is the minimum sample size you need to measure the mean of something with a <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="oneSampleAvgStdev" value="320" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvg()"></span> and be able to state with a
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgStdev" value="320" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvg()"></span> and be able to state with a
         <select class="form-select inlineselect" id="oneSampleAvgConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleAvg()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -267,7 +267,7 @@
           <option value="0.9999">99.99%</option>
         </select></span>
         confidence level that the true mean is inside the interval between more or <span style="white-space: nowrap;">less
-        <input type="text" class="form-control inlineinput" id="oneSampleAvgCI" value="10" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleAvg()">
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgCI" value="10" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleAvg()">
         around</span> your sample's measured mean?
       </form>
       <p style="text-align: center; font-size: 1.4em; font-weight: bold;">Answer: <span id="oneSampleAvgN" class="text-success-emphasis">?</span> observations</p>
@@ -289,8 +289,8 @@
     <div id="ssvf" style="display: none;">
       <form style="margin: 25px; text-align: center; font-size: 1.2em;">
         What is the minimum sample size you need to measure the mean of something with a <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedStdev" value="18.5" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvgFixed()">,</span> measure the sample mean <span style="white-space: nowrap;">of
-        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedSampled" value="22" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleAvgFixed()">,</span> and be able to state <span style="white-space: nowrap;">with a
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedStdev" value="18.5" size="4" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculateOneSampleAvgFixed()">,</span> measure the sample mean <span style="white-space: nowrap;">of
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedSampled" value="22" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculateOneSampleAvgFixed()">,</span> and be able to state <span style="white-space: nowrap;">with a
         <select class="form-select inlineselect" id="oneSampleAvgFixedConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculateOneSampleAvgFixed()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -309,7 +309,7 @@
           <option value="not larger">not larger than</option>
           <option value="not">not</option>
         </select>
-        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedAvg" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Referece value to compare the sample against" oninput="calculateOneSampleAvgFixed()">?</span>
+        <input type="text" class="form-control inlineinput" id="oneSampleAvgFixedAvg" value="20" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Referece value to compare the sample against" oninput="calculateOneSampleAvgFixed()">?</span>
         <p id="oneSampleAvgFixedError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the sampled value could be smaller than the reference and still be statistically NOT smaller than it.</p>
         <p id="oneSampleAvgFixedError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the sampled value could be larger than the reference and still be statistically NOT larger than it.</p>
       </form>
@@ -470,8 +470,8 @@
           <option value="1">1%/99%</option>
         </select>,</span>
         measure <span style="white-space: nowrap;">a
-        <input type="text" class="form-control inlineinput" id="2SampleRateFP1" value="14" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the first and <span style="white-space: nowrap;">a
-        <input type="text" class="form-control inlineinput" id="2SampleRateFP2" value="17" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the second (a <b id="2SampleRateFDelta" class="text-success-emphasis">? p.p.</b> difference between them) and be able to state with a
+        <input type="text" class="form-control inlineinput" id="2SampleRateFP1" value="14" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the first and <span style="white-space: nowrap;">a
+        <input type="text" class="form-control inlineinput" id="2SampleRateFP2" value="17" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the second (a <b id="2SampleRateFDelta" class="text-success-emphasis">? p.p.</b> difference between them) and be able to state with a
         <select class="form-select inlineselect" id="2SampleRateFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleRateF()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -554,12 +554,12 @@
           <option value="1">1%/99%</option>
         </select>,</span>
         measure the sample mean <span style="white-space: nowrap;">of
-        <input type="text" class="form-control inlineinput" id="2SampleAvg1" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvg()"></span> in the first population which has a
+        <input type="text" class="form-control inlineinput" id="2SampleAvg1" value="20" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvg()"></span> in the first population which has a
         <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev1" value="12.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()">,</span> and
-        <input type="text" class="form-control inlineinput" id="2SampleAvg2" value="21" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvg()"> in the second population which has a
+        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev1" value="12.7" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()">,</span> and
+        <input type="text" class="form-control inlineinput" id="2SampleAvg2" value="21" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvg()"> in the second population which has a
         <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev2" value="13.2" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()"></span> (a <b id="2SampleAvgDelta" class="text-success-emphasis">?</b> difference between them) and be able to state with a
+        <input type="text" class="form-control inlineinput" id="2SampleAvgStdev2" value="13.2" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvg()"></span> (a <b id="2SampleAvgDelta" class="text-success-emphasis">?</b> difference between them) and be able to state with a
         <select class="form-select inlineselect" id="2SampleAvgConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleAvg()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -647,12 +647,12 @@
           <option value="1">1%/99%</option>
         </select>,</span>
         measure the sample mean <span style="white-space: nowrap;">of
-        <input type="text" class="form-control inlineinput" id="2SampleAvgF1" value="20" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvgF()"></span> in the first population which has a
+        <input type="text" class="form-control inlineinput" id="2SampleAvgF1" value="20" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 1" oninput="calculate2SampleAvgF()"></span> in the first population which has a
         <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev1" value="12.7" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()">,</span> and
-        <input type="text" class="form-control inlineinput" id="2SampleAvgF2" value="22" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvgF()"> in the second population which has a
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev1" value="12.7" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()">,</span> and
+        <input type="text" class="form-control inlineinput" id="2SampleAvgF2" value="22" size="2" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true mean of population 2" oninput="calculate2SampleAvgF()"> in the second population which has a
         <span style="white-space: nowrap;">standard deviation of
-        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev2" value="13.2" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()"></span> (a <b id="2SampleAvgFDelta" class="text-success-emphasis">?</b> difference between them) and be able to state with a
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFStdev2" value="13.2" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="A measure of the amount of variation of a variable around it's mean value for population 1. If you don't know it, try estimating with a small sample or using data from similar tests" oninput="calculate2SampleAvgF()"></span> (a <b id="2SampleAvgFDelta" class="text-success-emphasis">?</b> difference between them) and be able to state with a
         <select class="form-select inlineselect" id="2SampleAvgFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleAvgF()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
@@ -666,7 +666,7 @@
           <option value="0.9999">99.99%</option>
         </select>
         confidence level that the difference between the true means of these populations is not smaller <span style="white-space: nowrap;">than
-        <input type="text" class="form-control inlineinput" id="2SampleAvgFMinDelta" value="1.4" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference value to compare the measured difference against" oninput="calculate2SampleAvgF()">?</span>
+        <input type="text" class="form-control inlineinput" id="2SampleAvgFMinDelta" value="1.4" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference value to compare the measured difference against" oninput="calculate2SampleAvgF()">?</span>
         <p id="2SampleAvgFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and the difference between them be compared with a negative value (meaning second sample rate smaller than first).</p>
         <p id="2SampleAvgFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error2">?</span> larger than the first and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error2">?</span>.</p>
         <p id="2SampleAvgFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller then the first and the difference between them be compared with a positive value (meaning second sample rate larger than first).</p>
