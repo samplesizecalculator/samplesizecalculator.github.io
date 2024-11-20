@@ -2,7 +2,6 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <title>Sample Size Calculator</title>
-  <base href="/">
   <meta name="description" content="An online calculator to help business analysts, researchers, marketing team, scientists, or any one interested in statistical significance to determine the minimum sample size required for their test to be statistically significant">
   <meta charset="utf-8">
   <script type="application/ld+json">
@@ -132,7 +131,7 @@
         </select>
         confidence level that the true rate is inside the interval between more or <span style="text-wrap: nowrap;">less 
         <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateCI" value="0.7" size="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Precision you want. A small interval means high precision and requires more sample" oninput="calculateOneSampleRate()"></span> percentage points</span> around the rate of 
-        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateP" value="3" size="1" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate. If it's totally uncertain, use 50%, which gives you the largest sample size" oninput="calculateOneSampleRate()">%</span>
+        <span style="white-space: nowrap;"><input type="text" class="form-control inlineinput" id="oneSampleRateP" value="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate. If it's totally uncertain, use 50%, which gives you the largest sample size" oninput="calculateOneSampleRate()">%</span>
         (a confidence interval between <b id="oneSampleRateMin" class="text-success-emphasis">?</b> and <b id="oneSampleRateMax" class="text-success-emphasis">?</b>)?
       </form>
       <p style="text-align: center; font-size: 1.4em; font-weight: bold;">Answer: <span id="oneSampleRateN" class="text-success-emphasis">?</span> observations</p>

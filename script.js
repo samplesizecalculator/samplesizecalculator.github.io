@@ -140,8 +140,14 @@ function doMainPhrase(){
   }
 }
 
+function adjustInputFieldSize(inputFieldObj){
+  inputFieldObj.style.width=Math.max(1,inputFieldObj.value.length)+2+"ch";
+  console.log(inputFieldObj.style.width)
+}
+
 function calculateOneSampleRate(){
-  document.getElementById("oneSampleRateP").size = Math.max(1,document.getElementById("oneSampleRateP").value.length);
+  //document.getElementById("oneSampleRateP").size = Math.max(1,document.getElementById("oneSampleRateP").value.length);
+  adjustInputFieldSize(document.getElementById("oneSampleRateP"))
   document.getElementById("oneSampleRateCI").size = Math.max(1,document.getElementById("oneSampleRateCI").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("oneSampleRateP").value.split(".").length == 1){
@@ -349,8 +355,8 @@ function calculate2SampleRate(){
   document.getElementById("2SampleRateError1").style.display='none';
   document.getElementById("2SampleRateError2").style.display='none';
 
-  document.getElementById("2SampleRateP1").size = Math.max(1,document.getElementById("2SampleRateP1").value.length-2);
-  document.getElementById("2SampleRateP2").size = Math.max(1,document.getElementById("2SampleRateP2").value.length-2);
+  document.getElementById("2SampleRateP1").size = Math.max(1,document.getElementById("2SampleRateP1").value.length);
+  document.getElementById("2SampleRateP2").size = Math.max(1,document.getElementById("2SampleRateP2").value.length);
   // add validation oneSampleRateRateP !!! tem que ter sõ número e até 1 ponto
   if (document.getElementById("2SampleRateP1").value.split(".").length == 1){
     var p1_precision=0;
