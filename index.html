@@ -3,13 +3,17 @@
 <head>
   <title>Sample Size Calculator</title>
   <meta name="description" content="Online calculator to determine the minimum sample size required for your tests to be statistically significant">
+  <meta property="og:site_name" content="Sample Size Calculator" />
+  <meta property="og:title" content="Sample Size Calculator" />
   <meta charset="utf-8">
   <script type="application/ld+json">
     { 
      "@context": "http://schema.org", 
      "@type": "CreativeWork",
      "headline": "Sample Size Calculator",
-     "abstract":"An online calculator to help business analysts, researchers, marketing team, scientists, or any one interested in statistical significance to determine the minimum sample size required for their test to be statistically significant",
+     "name": "Sample Size Calculator",
+     "url": "https://samplesizecalculator.github.io/",
+     "abstract": "An online calculator to help business analysts, researchers, marketing teams, scientists, or anyone interested in statistical significance to determine the minimum sample size required for their test to be statistically significant",
      "author":{
       "@type": "Person",
       "name": "Rafael Rodrigues Troiani"},
@@ -34,7 +38,7 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="script.js"></script>
   <script src="charts.js"></script>
-  <meta name="keywords" content="sample size,sample size calculator,sample size formula,sample size calculation,sample calculator,minimum detectable effect,statistics,AB test,A/B test,confidence interval,confidence level">
+  <meta name="keywords" content="sample size, sample size calculator, sample size formula, sample size calculation, sample calculator, minimum detectable effect, statistics, AB test, A/B test, confidence interval, confidence level">
   <style>
     a.link_format:link {color:inherit; text-decoration: underline;}
     a.link_format:visited {color:inherit; text-decoration: underline;}
@@ -45,25 +49,25 @@
       background-color: #747474;
     }
 
-    .inlineinput { /* overrides some of the formating from Bootstrap*/
+    .inlineinput { /* overrides some of the formatting from Bootstrap*/
       display:inline-flex;
       width:auto;
       margin:1px;
       padding:1px 3px 1px 3px;
       text-align:right;
     }
-    .inlineselect { /* overrides some of the formating from Bootstrap*/
+    .inlineselect { /* overrides some of the formatting from Bootstrap*/
       display:inline-flex;
       width:fit-content;
       margin:1px;
       padding:1px 28px 1px 3px;
     }
 
-    .container { /* overrides some of the formating from Bootstrap*/
+    .container { /* overrides some of the formatting from Bootstrap*/
       padding-left: 4px;
       padding-right: 4px;
     }
-    .col { /* overrides some of the formating from Bootstrap*/
+    .col { /* overrides some of the formatting from Bootstrap*/
       padding: 5px;
     }
 
@@ -204,13 +208,13 @@
           <option value="0.9999">99.99%</option>
         </select>
         confidence level that the true rate <span style="white-space: nowrap;">is
-        <select class="form-select inlineselect" id="oneSampleRateFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into an one- or two-tailed test" oninput="calculateOneSampleRateFixed()">
+        <select class="form-select inlineselect" id="oneSampleRateFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into a one- or two-tailed test" oninput="calculateOneSampleRateFixed()">
           <option value="not smaller" selected>not smaller than</option>
           <option value="not larger">not larger than</option>
           <option value="not">not</option>
         </select>
         <input type="text" class="form-control inlineinput" id="oneSampleRateFixedP" value="3" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Referece rate to compare the sample against" oninput="calculateOneSampleRateFixed()">%?</span>
-        <p id="oneSampleRateFixedError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the rate could be smaller than the reference and still be statistically NOT smaller than it.</p>
+        <p id="oneSampleRateFixedError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the rate could be lower than the reference and still be statistically NOT smaller than it.</p>
         <p id="oneSampleRateFixedError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the rate could be larger than the reference and still be statistically NOT larger than it.</p>
       </form>
       <p style="text-align: center; font-size: 1.4em; font-weight: bold;">Answer: <span id="oneSampleRateFixedN" class="text-success-emphasis">?</span> observations</p>
@@ -226,7 +230,7 @@
             <h5>Methodology</h5>
             One Sample Proportion Z-test<br>
             <img src="img/ssp.svg" alt="test statistic formula for one sample proportion" style="filter: invert(100%); padding: 10px;"><br>
-            where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
+            where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution, and the confidence level is found 
             <span id="oneSampleRateFixedTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="oneSampleRateFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" alt="left tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="oneSampleRateFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" alt="right tailed bell-shaped distribution chart" style="padding: 10px;"></span>
@@ -321,7 +325,7 @@
           <option value="0.9999">99.99%</option>
         </select></span>
         confidence level that the true mean <span style="white-space: nowrap;">is
-        <select class="form-select inlineselect" id="oneSampleAvgFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into an one- or two-tailed test" oninput="calculateOneSampleAvgFixed()">
+        <select class="form-select inlineselect" id="oneSampleAvgFixedAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed value against a reference. This translates into a one- or two-tailed test" oninput="calculateOneSampleAvgFixed()">
           <option value="not smaller" selected>not smaller than</option>
           <option value="not larger">not larger than</option>
           <option value="not">not</option>
@@ -340,7 +344,7 @@
             One Sample Mean Z-test<br>
             <img src="img/ssv.svg" alt="test statistic formula for one sample mean" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="oneSampleAvgFixedTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two tailed bell-shaped distribution chart" style="padding: 10px;"></span>
+            <span id="oneSampleAvgFixedTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two-tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="oneSampleAvgFixedLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" alt="left tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="oneSampleAvgFixedRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" alt="right tailed bell-shaped distribution chart" style="padding: 10px;"></span>
           </div>
@@ -413,7 +417,7 @@
         </select>
         confidence level that
         <span style="white-space: nowrap;">
-        <select class="form-select inlineselect" id="2SampleRateAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into an one- or two-tailed test" oninput="calculate2SampleRate()">
+        <select class="form-select inlineselect" id="2SampleRateAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into a one- or two-tailed test" oninput="calculate2SampleRate()">
           <option value="not equal" selected>the true rates are not the same</option>
           <option value="not smaller">the second population's true rate in not smaller than the first's</option>
           <option value="not larger">the second population's true rate in not larger than the first's</option>
@@ -432,7 +436,7 @@
             <img src="img/2pt_1.svg" alt="test statistic formula for two sample proportion part 1" style="filter: invert(100%); padding: 10px;"><br>
             <img src="img/2pt_2.svg" alt="test statistic formula for two sample proportion part 2" style="filter: invert(100%); padding: 10px;"><br>
             where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="2SampleRateTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two tailed bell-shaped distribution chart" style="padding: 10px;"></span>
+            <span id="2SampleRateTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two-tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="2SampleRateLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" alt="left tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="2SampleRateRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" alt="right tailed bell-shaped distribution chart" style="padding: 10px;"></span>
           </div>
@@ -491,7 +495,7 @@
         measure <span style="white-space: nowrap;">a
         <input type="text" class="form-control inlineinput" id="2SampleRateFP1" value="14" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the first and <span style="white-space: nowrap;">a
         <input type="text" class="form-control inlineinput" id="2SampleRateFP2" value="17" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Best guess you have about the true rate" oninput="calculate2SampleRateF()">%</span> rate from the second (a <b id="2SampleRateFDelta" class="text-success-emphasis">? p.p.</b> difference between them) and be able to state with a
-        <select class="form-select inlineselect" id="2SampleRateFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99% and social sciences use 95%" oninput="calculate2SampleRateF()">
+        <select class="form-select inlineselect" id="2SampleRateFConf" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Level of confidence you require. Usually, medical and pharmacy applications use 98% or 99%, and social sciences use 95%" oninput="calculate2SampleRateF()">
           <option value="0.75">75%</option>
           <option value="0.80">80%</option>
           <option value="0.85">85%</option>
@@ -505,10 +509,10 @@
         </select>
         confidence level that the difference between the true rates is not smaller <span style="white-space: nowrap;">than
         <input type="text" class="form-control inlineinput" id="2SampleRateFMinDelta" value="1.5" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference rate to compare the measured difference against" oninput="calculate2SampleRateF()"> p.p.?</span>
-        <p id="2SampleRateFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and the difference between them be compared with a negative value (meaning second sample rate smaller than first).</p>
-        <p id="2SampleRateFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error2">? p.p.</span> larger than the first and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error2">? p.p.</span>.</p>
-        <p id="2SampleRateFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller then the first and the difference between them be compared with a positive value (meaning second sample rate larger than first).</p>
-        <p id="2SampleRateFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error4">? p.p.</span> (smaller) than the first and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error4">? p.p.</span>.</p>
+        <p id="2SampleRateFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first, and the difference between them be compared with a negative value (meaning the second sample rate is smaller than the first).</p>
+        <p id="2SampleRateFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error2">? p.p.</span> larger than the first, and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error2">? p.p.</span>.</p>
+        <p id="2SampleRateFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller than the first, and the difference between them be compared with a positive value (meaning the second sample rate is larger than the first).</p>
+        <p id="2SampleRateFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleRateFDelta_error4">? p.p.</span> (smaller) than the first, and the difference between them still be statistically not smaller than <span id="2SampleRateFMinDelta_error4">? p.p.</span>.</p>
       </form>
       <p style="text-align: center; font-size: 1.4em; font-weight: bold;">Answer: <span id="2SampleRateFN_phrase" class="text-success-emphasis">?</span></p>
       <br><hr>
@@ -593,7 +597,7 @@
           <option value="0.9999">99.99%</option>
         </select>
         confidence level that the second population true mean <span style="white-space: nowrap;">is 
-        <select class="form-select inlineselect" id="2SampleAvgAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into an one- or two-tailed test" oninput="calculate2SampleAvg()">
+        <select class="form-select inlineselect" id="2SampleAvgAns" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="How to compare the observed values. This translates into a one- or two-tailed test" oninput="calculate2SampleAvg()">
           <option value="not equal" selected>not equal to</option>
           <option value="not smaller">not smaller than</option>
           <option value="not larger">not larger than</option>
@@ -610,8 +614,8 @@
             <h5>Methodology</h5>
             Two Sample Mean Z-test<br>
             <img src="img/2vt.svg" alt="test statistic formula for two sample mean. z=\frac{\overline{x_2}-\overline{x_1}}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}" style="filter: invert(100%); padding: 10px;"><br>
-            where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution and the confidence level is found 
-            <span id="2SampleAvgTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two tailed bell-shaped distribution chart" style="padding: 10px;"></span>
+            where <img src="img/z.svg" alt="z" style="filter: invert(100%); padding: 0px;"> follows a Standard Normal Distribution, and the confidence level is found 
+            <span id="2SampleAvgTwoTailed" style="display: none;">in the middle of the distribution, inside minimum and maximum bounds (two-tailed).<br><img src="img/normal_two.png" alt="two-tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="2SampleAvgLeftTailed" style="display: none;">at the right side of the distribution (one-tailed).<br><img src="img/normal_left.png" alt="left tailed bell-shaped distribution chart" style="padding: 10px;"></span>
             <span id="2SampleAvgRightTailed" style="display: none;">at the left side of the distribution (one-tailed).<br><img src="img/normal_right.png" alt="right tailed bell-shaped distribution chart" style="padding: 10px;"></span>
           </div>
@@ -688,10 +692,10 @@
         </select>
         confidence level that the difference between the true means of these populations is not smaller <span style="white-space: nowrap;">than
         <input type="text" class="form-control inlineinput" id="2SampleAvgFMinDelta" value="1.4" maxlength="14" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reference value to compare the measured difference against" oninput="calculate2SampleAvgF()">?</span>
-        <p id="2SampleAvgFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first and the difference between them be compared with a negative value (meaning second sample rate smaller than first).</p>
-        <p id="2SampleAvgFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error2">?</span> larger than the first and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error2">?</span>.</p>
-        <p id="2SampleAvgFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller then the first and the difference between them be compared with a positive value (meaning second sample rate larger than first).</p>
-        <p id="2SampleAvgFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error4">?</span> (smaller) than the first and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error4">?</span>.</p>
+        <p id="2SampleAvgFError1" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be larger than the first, and the difference between them be compared with a negative value (meaning the second sample rate is smaller than the first).</p>
+        <p id="2SampleAvgFError2" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error2">?</span> larger than the first, and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error2">?</span>.</p>
+        <p id="2SampleAvgFError3" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be smaller than the first and the difference between them be compared with a positive value (meaning the second sample rate is larger than the first).</p>
+        <p id="2SampleAvgFError4" style="font-size: 0.8em; display: none;" class="text-danger-emphasis">Wait! There is no way the second sample could be <span id="2SampleAvgFDelta_error4">?</span> (smaller) than the first, and the difference between them still be statistically not smaller than <span id="2SampleAvgFMinDelta_error4">?</span>.</p>
       </form>
       <p style="text-align: center; font-size: 1.4em; font-weight: bold;">Answer: <span id="2SampleAvgFN_phrase" class="text-success-emphasis">?</span></p>
       <br><hr>
@@ -751,27 +755,27 @@
     </div>
     <div id="FAQ_rate" style="display: none;">
       <p><span class="FAQ_questions">Why do I need to know the rate BEFORE taking the sample?</span><br>
-        <span class="FAQ_answers">Because the variability of the sample's rate depend on the level of the rate. You should use the best guess you have about the true rate and then fine tune sample size as the results come in. Some calculators encourage you to use 50% rate, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you have previous insight about the level of the rate, use it.</span>
+        <span class="FAQ_answers">Because the variability of the sample's rate depends on the level of the rate. You should use the best guess you have about the true rate and then fine-tune the sample size as the results come in. Some calculators encourage you to use 50% rate, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you have previous insight about the level of the rate, use it.</span>
       </p>
     </div>
     <div id="FAQ_rateForFixed" style="display: none;">
       <p><span class="FAQ_questions">Why do I need to know these rates BEFORE taking the sample?</span><br>
         <span class="FAQ_answers"><b>Sample rate:</b> Because the difference between the observed sample rate and a given reference rate is crucial to say if the rates are statistically different or not. If you get a small difference, you'll need a much bigger sample to say they are different.<br>
-        <b>Reference rate:</b> Because the variability of the sample's rate depend on the level of the rate. Some calculators encourage you to use 50% rate here, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you do that, be carefull to also adjust the sample rate accordingly, since the sample size will depend on the difference between sample rate and this reference rate.<br>
+        <b>Reference rate:</b> Because the variability of the sample's rate depends on the level of the rate. Some calculators encourage you to use 50% rate here, as this is the one that generates the largest variability and, consequently, the largest sample size. But, if you do that, be careful to also adjust the sample rate accordingly, since the sample size will depend on the difference between the sample rate and this reference rate.<br>
         You should use the best guess you have about the true value of these rates and then fine tune sample size as the results come in.</span>
       </p>
     </div>
     <div id="FAQ_defineInterval" style="display: none;">
       <p><span class="FAQ_questions">How do I define the interval?</span><br>
-        <span class="FAQ_answers">This represents the level of precision you want to have. Small intervals means high precision, but will also require larger sample sizes. Input an interval that makes sense for what you are testing. Consider that, after the test, this is going to be the level of precision of the rate you'll measure.</span>
+        <span class="FAQ_answers">This represents the level of precision you want to have. Small intervals mean high precision, but will also require larger sample sizes. Input an interval that makes sense for what you are testing. Consider that, after the test, this is going to be the level of precision of the rate you'll measure.</span>
       </p>
     </div>
     <div id="FAQ_calc_ssp" style="display: none;">
       <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
         <span class="FAQ_answers">
-          <a href="https://www.calculator.net/sample-size-calculator.html" target="_blank">Calculator.net</a> gives the same result, just be careful with the "Margin of Error" parameter because the tooltip recommends inputing the percentage in relative terms, but the math behind it uses absolute terms.<br>
-          <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a> and <a href="https://select-statistics.co.uk/calculators/sample-size-calculator-population-proportion/" target="_blank">Select statistical services</a> give the same result, but they have an additional parameter, the size of the population. If the size is large, the result is equal to this calculator. They also don't explain well how to input the margin of error, which is the same as this calculator, but they don't say it is treated as absolute terms like percentage points, instead of relative terms.<br>
-          <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> consider the rate to be 50% and don't provide a way to change it. That's probably not a bad assumption for online surveys, given the uncertainty about the answers, but it inflates the sample size, especially if you already know the expected value you are measuring is much different from 50%. These calculators also have the population size parameter and, if the size is large, the result is equal to this calculator.<br>
+          <a href="https://www.calculator.net/sample-size-calculator.html" target="_blank">Calculator.net</a> gives the same result, just be careful with the "Margin of Error" parameter because the tooltip recommends inputting the percentage in relative terms, but the math behind it uses absolute terms.<br>
+          <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a> and <a href="https://select-statistics.co.uk/calculators/sample-size-calculator-population-proportion/" target="_blank">Select statistical services</a> give the same result, but they have an additional parameter, the size of the population. If the size is large, the result is equal to this calculator. They also don't explain well how to input the margin of error, which is the same as this calculator, but they don't say it is treated as absolute terms, like percentage points, instead of relative terms.<br>
+          <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> consider the rate to be 50% and don't provide a way to change it. That's probably not a bad assumption for online surveys, given the uncertainty about the answers, but it inflates the sample size, especially if you already know the expected value you are measuring is much different from 50%. These calculators also have the population size parameter, and if the size is large, the result is equal to this calculator.<br>
           <a href="https://sample-size.net/sample-size-conf-interval-proportion/" target="_blank">Sample Size Calculators for designing clinical research</a> gives the same results under the name "Normal approximation to the binomial calculation", and it also gives a higher sample size under "Binomial 'exact' calculation", but there is no explanation about this alternative methodology.<br>
           -- add calculators with Beta!!!!
         </span>
@@ -788,7 +792,7 @@
       <p><span class="FAQ_questions">Why do other online calculators give different results?</span><br>
         <span class="FAQ_answers">
           <a href="https://www.calculator.net/confidence-interval-calculator.html" target="_blank">Calculator.net</a>, <a href="https://365datascience.com/calculators/confidence-interval-calculator/">365DataScience</a> and <a href="https://sample-size.net/confidence-interval-mean/" target="_blank">Sample Size Calculators for designing clinical research</a> give the same result, but you input the sample size and they give you the confidence interval (the other way around). On the other hand, the latter one provides an improved accuracy for small sample sizes because it uses the <i>student's t</i> distribution instead of the <i>Normal</i> distribution, which is relevant for samples under ~30 observations, making it even more precise than this calculator.<br>
-          Heads up! Several online calculators like <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a>, <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> assume that your data is binary: each observation is either 1 (one) or 0 (zero), or true/false, or the person answered yes/no to a question, which is OK for measuring what proportion of website visitors makes a purchase, or what is the rate of employment of a population. This calculator also provide that kind of answer, but you have to choose "measuring the rate", rather than "measuring the average value" at the top.<br>
+          Heads up! Several online calculators like <a href="http://www.raosoft.com/samplesize.html" target="_blank">Raosoft</a>, <a href="https://www.surveymonkey.com/mp/sample-size-calculator/" target="_blank">SurveyMonkey</a>, <a href="https://www.qualtrics.com/blog/calculating-sample-size/" target="_blank">Qualtrics</a>, <a href="https://www.checkmarket.com/sample-size-calculator/" target="_blank">CheckMarket</a> and <a href="https://www.questionpro.com/sample-size-calculator/" target="_blank">QuestionPro</a> assume that your data is binary: each observation is either 1 (one) or 0 (zero), or true/false, or the person answered yes/no to a question, which is OK for measuring what proportion of website visitors makes a purchase, or what is the rate of employment of a population. This calculator also provides that kind of answer, but you have to choose "measuring the rate", rather than "measuring the average value" at the top.<br>
           -- add calculators with Beta!!!!
         </span>
       </p>
